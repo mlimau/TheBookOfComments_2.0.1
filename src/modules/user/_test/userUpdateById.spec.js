@@ -4,14 +4,15 @@ const graphqlEndPoint = 'http://localhost:5000/graphql'
 
 
 describe('Positives user tests', () => {
-    describe('USER GET BY ID', () => {
-        let userId
-        it('Create user', (done) => {
+    describe('USER UPDATE by ID', () => {
+
+        let userId = null
+        it('Created user', (done) => {
 
             const reqData = {
                 "userInput": {
-                    "firstName": "User1FirstName",
-                    "lastName": "User1LastName"
+                    firstName: "User1FirstName",
+                    lastName: "User1LastName"
                 }
             }
             const respData = {
@@ -33,24 +34,28 @@ describe('Positives user tests', () => {
 
                     const responseData = res.body.data
                     userId = responseData.userCreate._id
-                    console.log("USER ID ===", responseData.userCreate._id)
-                    done()
+                    console.log(responseData)
+            done()
                 })
         })//above user was created without assertions
-
-
-        it('Delete user by ID', (done) => {
+        it('Update user by ID', (done) => {
             const arq = {
-                userId: userId
+                "userInput": {
+                    firstName: "UpdateData",
+                    lastName: "Mocka",
+                    _id: userId
+                }
+            }
+            const resBody = {
+                query: `mutation UserUpdateById($userInput: UserFields) {
+                    userUpdateById(userInput: $userInput) {
+                        firstName
+                        lastName
+                    }
+                }`,
+                variables: arq
             }
 
-            const resBody = {
-                query: `mutation UserDeleteById($userId: ID!) {
-                        userDeleteById(userId: $userId)
-       
-}`,
-             variables: arq
-            }
             request(graphqlEndPoint)
                 .post('/')
                 .send(resBody)
@@ -58,9 +63,10 @@ describe('Positives user tests', () => {
                 .end((err, res) => {
                     if (err) return done(err)
 
-                    const respon = res.body.data
-                    console.log("USER DELETE ===", respon)
-                    expect(respon.userDeleteById).to.eq(true)
+                    const responseData = res.body.data
+                    console.log("UPDATED USER ===", responseData.userUpdateById)
+
+                    expect(responseData.userUpdateById.firstName).eq('"UpdateData"')
                     done()
                 })
         })

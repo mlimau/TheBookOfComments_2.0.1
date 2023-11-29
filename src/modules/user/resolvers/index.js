@@ -3,7 +3,7 @@ const userCreate = require('./userCreate')
 const userDeleteById = require('./userDeleteById')
 const usersGetAll = require('./usersGetAll')
 const userGetById = require('./userGetById')
-
+const userUpdateById = require('./userUpdateById')
 
 const userResolvers = {
   User: {

@@ -6,6 +6,7 @@
     "test": "PORT=6000 TEST_RUNNER=true mocha ./src/modules/user/_test/userCreate.spec.js --timeout 20000 --exit",
     "userGetById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userGetById.spec.js --timeout 20000 --exit",
     "userDeletetById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userDeleteById.spec.js --timeout 20000 --exit",
+    "userUpdateById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userUpdateById.spec.js --timeout 20000 --exit",
     "local": "cross-env NODE_ENV=local nodemon --inspect -r dotenv/config -r src/index.js",
     "start": "nodemon src/index.js"
   },
