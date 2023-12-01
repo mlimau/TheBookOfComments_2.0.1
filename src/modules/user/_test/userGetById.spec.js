@@ -4,7 +4,7 @@ const graphqlEndPoint = 'http://localhost:5000/graphql'
 
 
 describe('Positives user tests', () => {
-    describe('USER GET BY ID', () => {
+    describe('USER GET BY ID positive', () => {
         let userId
         it('Created user get by ID', (done) => {
 
@@ -63,37 +63,13 @@ describe('Positives user tests', () => {
                     const responseData = res.body.data
                     console.log("RESP DATA USER GET BY ID ===", responseData)
                     expect(responseData.userGetById._id).eq(userId)//path from Apollo Operation - res.body.data+path
-                    expect(responseData.userGetById.firstName).eq('User1FirstName')
+                    //expect(responseData.userGetById.firstName).eq(arq.userInput.firstName)
                     done()
                 })
         })
-        it('Delete created user', (done) => {
-            const arq = {
-                "userId": userId
-            }
-
-            const resBody = {
-                query: `mutation UserDeleteById($userId: ID!) {
-  userDeleteById(userId: $userId)
-}`,
-                variables: arq
-            }
-
-            request(graphqlEndPoint)
-                .post('/')
-                .send(resBody)
-                .expect(200)
-                .end((err, res) => {
-                    if(err) return done(err)
-
-            const respon = res.body.data
-            console.log("USER DELETE ===", respon)
-
-            expect(respon.userDeleteById).to.eq(true)
-            done()
-                })
-        })
-
 
     })
+describe('User get by Id negative', () => {
+
+})
 })

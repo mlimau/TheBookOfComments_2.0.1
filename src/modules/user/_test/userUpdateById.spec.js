@@ -6,11 +6,11 @@ const graphqlEndPoint = 'http://localhost:5000/graphql'
 describe('Positives user tests', () => {
     describe('USER UPDATE by ID', () => {
 
-        let userId = null
+        let userId
         it('Created user', (done) => {
 
             const reqData = {
-                "userInput": {
+                userInput: {
                     firstName: "User1FirstName",
                     lastName: "User1LastName"
                 }
@@ -35,15 +35,16 @@ describe('Positives user tests', () => {
                     const responseData = res.body.data
                     userId = responseData.userCreate._id
                     console.log(responseData)
-            done()
+                    done()
                 })
         })//above user was created without assertions
+
         it('Update user by ID', (done) => {
             const arq = {
-                "userInput": {
-                    firstName: "UpdateData",
-                    lastName: "Mocka",
-                    _id: userId
+                userInput: {
+                    _id: userId,
+                    firstName: "Ivan1",
+                    lastName: "Mockach"
                 }
             }
             const resBody = {
@@ -51,6 +52,8 @@ describe('Positives user tests', () => {
                     userUpdateById(userInput: $userInput) {
                         firstName
                         lastName
+                        _id
+                        
                     }
                 }`,
                 variables: arq
@@ -63,13 +66,16 @@ describe('Positives user tests', () => {
                 .end((err, res) => {
                     if (err) return done(err)
 
-                    const responseData = res.body.data
-                    console.log("UPDATED USER ===", responseData.userUpdateById)
+                    const updatedData = res.body.data
+                    console.log("UPDATED USER ===", updatedData)
 
-                    expect(responseData.userUpdateById.firstName).eq('"UpdateData"')
+                    expect(updatedData.userUpdateById.firstName).eq(arq.userInput.firstName)
+                    expect(updatedData.userUpdateById.lastName).eq(arq.userInput.lastName)
+                    expect(updatedData.userGetById._id).to.eq(userId)
                     done()
                 })
         })
-
     })
 })
+
+
