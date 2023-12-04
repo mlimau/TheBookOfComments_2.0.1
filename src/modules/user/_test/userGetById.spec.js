@@ -1,7 +1,7 @@
-const request = require("supertest");
 const { expect } = require("chai");
+const {requestGql} = require('../../helper');
 const graphQLEndpoint = "http://localhost:5000/graphql";
-
+const {  arg } = require ('./data')
 describe("USER GET BY ID", () => {
   describe("USER  GET BY ID - POSITIVE", () => {
     let userId = null;
@@ -13,18 +13,10 @@ describe("USER GET BY ID", () => {
     };
     it("user create", (done) => {
       const postData = {
-        query: `mutation UserCreate($userInput: UserItems) {
-  userCreate(userInput: $userInput) {
-    _id
-    firstName
-    lastName
-  }
-}`,
+        query:
         variables: user,
       };
-      request(graphQLEndpoint)
-        .post("/")
-        .send(postData)
+        requestGql(postData)
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
@@ -50,9 +42,7 @@ describe("USER GET BY ID", () => {
 }`,
         variables: arg,
       };
-      request(graphQLEndpoint)
-        .post("/")
-        .send(postData)
+      requestGql(postData)
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
