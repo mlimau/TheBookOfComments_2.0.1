@@ -1,6 +1,7 @@
 const request = require("supertest");
 const { expect } = require("chai");
 const graphQLEndpoint = "http://localhost:5000/graphql";
+const {userGetAllQuery} = require('./queries');
 
 describe("USERS GET ALL", () => {
     describe("USERS GET ALL - POSITIVE", () => {
@@ -9,13 +10,7 @@ describe("USERS GET ALL", () => {
                 userId: null
             };
             const postData = {
-                query: `query UsersGetAll {
-  usersGetAll {
-    _id
-    firstName
-    lastName
-  }
-}`,
+                query: userGetAllQuery,
                 variables: arg,
             };
             request(graphQLEndpoint)

@@ -2,6 +2,7 @@ const {expect} = require('chai');
 const {requestGql} = require('../../helper');
 const graphQLEndpoint = 'http://localhost:5000/graphql';
 const {arg} = require('./data');
+const {userCreateQuery} = require('./queries');
 describe('USER GET BY ID', () => {
     describe('USER  GET BY ID - POSITIVE', () => {
         let userId = null;
@@ -13,12 +14,9 @@ describe('USER GET BY ID', () => {
         };
         it('user create', (done) => {
             const postData = {
-                query:
-                variables,
-        :
-            user;
-        }
-            ;
+                query: userCreateQuery,
+                variables: arg,
+            };
             requestGql(postData)
                 .expect(200)
                 .end((err, res) => {
