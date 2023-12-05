@@ -1,33 +1,25 @@
 const request = require ('supertest')
 const { expect } = require('chai')
-const graphqlEndPoint = 'http://localhost:5000/graphql'
+const {requestGqL} = require('../../helper')
+const { userCreateQuery, userUpdateById} = require('./queries')
+
 
 
 describe('Positives user tests', () => {
     describe('USER UPDATE by ID', () => {
-
         let userId
+        let userToUpdate = {
+            userInput: {
+                firstName: "ToUpdateFirstName",
+                lastName: "ToUpdateLastName"
+            }
+        }
         it('Created user', (done) => {
-
-            const reqData = {
-                userInput: {
-                    firstName: "User1FirstName",
-                    lastName: "User1LastName"
-                }
+           const respData = {
+                query: userCreateQuery,
+                variables: userToUpdate
             }
-            const respData = {
-                query: `mutation UserCreate($userInput: UserItems) {
-          userCreate(userInput: $userInput) {
-            _id
-            firstName
-            lastName
-          }
-     }`, variables: reqData
-            }
-
-            request(graphqlEndPoint)
-                .post('/')
-                .send(respData)
+        requestGqL(respData)
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err)
@@ -48,20 +40,10 @@ describe('Positives user tests', () => {
                 }
             }
             const resBody = {
-                query: `mutation UserUpdateById($userInput: UserFields) {
-                    userUpdateById(userInput: $userInput) {
-                        firstName
-                        lastName
-                        _id
-                        
-                    }
-                }`,
+                query: userUpdateById,
                 variables: arq
             }
-
-            request(graphqlEndPoint)
-                .post('/')
-                .send(resBody)
+            requestGqL(resBody)
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err)

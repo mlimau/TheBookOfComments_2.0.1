@@ -1,69 +1,44 @@
-const request = require ('supertest')
 const { expect } = require ('chai')
-const graphQlEndPoint = 'http://localhost:5000/graphql'
-
+const {requestGqL} = require('../../helper')
+const {userCreateQuery, userDeleteByIdM} = require('./queries')
+const {arg} = require('./data')
 
 describe('USER DELETE BY ID', () => {
-    describe('USER DELETE BY ID positive', () => {
+   describe('USER DELETE BY ID positive', () => {
         let userId
         it('User create', (done) => {
-
-            const arq =  {//2 с Appolo Variables параметры для request wothout quotes
-                "userInput": {
-                    firstName: 'UserDeleteFN',//type names for tests, in Appolo were null
-                    lastName: 'UserDeleteLN'
-                }
-            }
-
             const createdUser =  {
-                query: `mutation UserCreate($userInput: UserItems) {
-            userCreate(userInput: $userInput) {
-             _id
-            firstName
-            lastName
-  }
-}`, variables: arq
+                query: userCreateQuery,
+                variables: arg
             }
-    request(graphQlEndPoint)
-        .post('/')
-        .send(createdUser)
+        requestGqL(createdUser)//также вставили тот же Helper и внесли в него наши параметры to open page
         .expect(200)
         .end((err, res) => {
             if(err) return done(err)
-
-            const responData = res.body.data
-            userId = responData. userCreate._id
-            console.log(" USER ID ===", userId)
-            console.log("RESPONSE ===", responData)
+            const resData = res.body.data
+            userId = resData. userCreate._id
+            console.log("USER ID ===", userId)
+            console.log("RESPONSE ===", resData)
             done()
         })
 
-        })
+   })
 
         it('User delete', (done) => {
-
-            const arq = {
+            const delUser = {
                  userId: userId
             }
             const responseOfDelete = {
-                query: `
-                mutation UserDeleteById($userId: ID!) {
-                userDeleteById(userId: $userId)
-                }
-            `,
-                variables: arq
+                query: userDeleteByIdM ,
+                variables: delUser
             }
-
-            request(graphQlEndPoint)
-                .post('/')
-                .send(responseOfDelete)
+            requestGqL(responseOfDelete)
                 .expect(200)
                 .end((err, res) => {
                     if(err) return done(err)
 
                 const respData = res.body.data
                 console.log(respData)
-
                 expect(respData.userDeleteById).to.eq(true)
                 done()
                 })

@@ -1,39 +1,26 @@
-const request = require ('supertest')
-const { expect } = require('chai')
-const graphqlEndPoint = 'http://localhost:5000/graphql'
-
+const { expect } = require ('chai')
+const { requestGqL } = require ('../../helper')
+const { userCreateQuery, userGetById} = require ('./queries')
+const { arg } = require ('./data')
 
 describe('Positives user tests', () => {
     describe('USER GET BY ID positive', () => {
         let userId
-        it('Created user get by ID', (done) => {
 
-    const reqData = {
-            "userInput": {
-              "firstName": "User1FirstName",
-              "lastName": "User1LastName"
-              }
-            }
-    const respData = {
-                query: `mutation UserCreate($userInput: UserItems) {
-          userCreate(userInput: $userInput) {
-            _id
-            firstName
-            lastName
-          }
-     }`, variables: reqData
-            }
+    it('Created user get by ID', (done) => {
 
-        request(graphqlEndPoint)
-           .post('/')
-            .send(respData)
-            .expect(200)
+        const respData = {
+                query: userCreateQuery,
+                variables: arg
+            }
+        requestGqL(respData)
+           .expect(200)
             .end((err, res) => {
                 if(err) return done(err)
 
-     const responseData = res.body.data
-     userId = responseData.userCreate._id
-     console.log(responseData)
+        const responseData = res.body.data
+            userId = responseData.userCreate._id
+            console.log(responseData)
                 console.log("USER ID ===",responseData.userCreate._id)
                 done()
             })
@@ -41,22 +28,14 @@ describe('Positives user tests', () => {
 
         it('Get user by ID', (done) => {
             const requestData = {
-               userId: userId
+               userId: userId//зашит в переменную в начале теста
             }
-            const responseData = {
-                query: `query UserGetById($userId: ID!) {
-                userGetById(userId: $userId) {
-                    _id
-                    firstName
-                    lastName
-                }
-            }`,
+            const resData = {
+                query: userGetById,//in queries.js
                 variables: requestData
             }
 
-            request(graphqlEndPoint)
-                .post('/')
-                .send(responseData)
+           requestGqL(resData)
                 .expect(200)
                 .end((err, res) => {
                     if(err) return done(err)
