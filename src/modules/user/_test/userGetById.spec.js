@@ -1,64 +1,68 @@
-const { expect } = require("chai");
+const {expect} = require('chai');
 const {requestGql} = require('../../helper');
-const graphQLEndpoint = "http://localhost:5000/graphql";
-const {  arg } = require ('./data')
-describe("USER GET BY ID", () => {
-  describe("USER  GET BY ID - POSITIVE", () => {
-    let userId = null;
-    let user = {
-      userInput: {
-        firstName: "firstName1",
-        lastName: "lastName1",
-      },
-    };
-    it("user create", (done) => {
-      const postData = {
-        query:
-        variables: user,
-      };
-        requestGql(postData)
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          const respData = res.body.data;
-          userId = res.body.data.userCreate._id;
-          console.log("RESP BODY ===", respData);
-          console.log("USER ID ===", userId);
-          done();
+const graphQLEndpoint = 'http://localhost:5000/graphql';
+const {arg} = require('./data');
+describe('USER GET BY ID', () => {
+    describe('USER  GET BY ID - POSITIVE', () => {
+        let userId = null;
+        let user = {
+            userInput: {
+                firstName: 'firstName1',
+                lastName: 'lastName1',
+            },
+        };
+        it('user create', (done) => {
+            const postData = {
+                query:
+                variables,
+        :
+            user;
+        }
+            ;
+            requestGql(postData)
+                .expect(200)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    const respData = res.body.data;
+                    userId = res.body.data.userCreate._id;
+                    console.log('RESP BODY ===', respData);
+                    console.log('USER ID ===', userId);
+                    done();
+                });
         });
-    });
 
-    it("user get by id", (done) => {
-      const arg = {
-        userId: userId,
-      };
-      const postData = {
-        query: `query UserGetById($userId: ID!) {
+        it('user get by id', (done) => {
+            const arg = {
+                userId: userId,
+            };
+            const postData = {
+                query: `query UserGetById($userId: ID!) {
   userGetById(userId: $userId) {
     _id
     firstName
     lastName
   } 
 }`,
-        variables: arg,
-      };
-      requestGql(postData)
-        .expect(200)
-        .end((err, res) => {
-          if (err) return done(err);
-          const respData = res.body.data;
-          console.log("RESP BODY USER GET BY ID ===", respData);
+                variables: arg,
+            };
+            requestGql(postData)
+                .expect(200)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    const respData = res.body.data;
+                    console.log('RESP BODY USER GET BY ID ===', respData);
 
-          //console.log(respData.userGetById);
-          //console.log(arg);
-          //console.log(user);
+                    //console.log(respData.userGetById);
+                    //console.log(arg);
+                    //console.log(user);
 
-          expect(respData.userGetById._id).eq(userId);
-          expect(respData.userGetById.firstName).eq(user.userInput.firstName);
-          expect(respData.userGetById.lastName).eq(user.userInput.lastName);
-          done();
+                    expect(respData.userGetById._id).eq(userId);
+                    expect(respData.userGetById.firstName).eq(user.userInput.firstName);
+                    expect(respData.userGetById.lastName).eq(user.userInput.lastName);
+                    done();
+                });
         });
     });
-  });
-  describe("USER CREATE - NEGATIVE", () => {});
+    describe('USER CREATE - NEGATIVE', () => {
+    });
 });

@@ -6,7 +6,7 @@ describe("USER CREATE", () => {
   describe("USER CREATE - POSITIVE", () => {
     it("user create", (done) => {
             const postData = {
-        query: userCreateQuery
+        query: userCreateQuery,
         variables: arg,
       };
 
