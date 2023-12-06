@@ -2,11 +2,12 @@ const request = require ('supertest')
 const { expect } = require('chai')
 const {requestGqL} = require('../../helper')
 const { userCreateQuery, userUpdateById} = require('./queries')
+const {describe} = require('mocha/lib/cli/run')
 
 
 
 describe('Positives user tests', () => {
-    describe('USER UPDATE by ID', () => {
+    describe('USER UPDATE by ID - POSITIVE', () => {
         let userId
         let userToUpdate = {
             userInput: {
@@ -57,6 +58,9 @@ describe('Positives user tests', () => {
                     done()
                 })
         })
+    })
+    describe('USER UPDATE by ID - NEGATIVE', () => {
+
     })
 })
 

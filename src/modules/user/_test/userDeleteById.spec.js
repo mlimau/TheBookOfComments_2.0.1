@@ -2,10 +2,12 @@ const { expect } = require ('chai')
 const {requestGqL} = require('../../helper')
 const {userCreateQuery, userDeleteByIdM} = require('./queries')
 const {arg} = require('./data')
+const User = require('../User')
 
 describe('USER DELETE BY ID', () => {
    describe('USER DELETE BY ID positive', () => {
         let userId
+
         it('User create', (done) => {
             const createdUser =  {
                 query: userCreateQuery,

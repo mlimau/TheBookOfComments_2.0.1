@@ -5,7 +5,7 @@ const { arg } = require ('./data')
 
 
 describe('USERS GET ALL', () => {
-    describe('Users get all positive', () => {
+    describe('Users get all - positive', () => {
 //user creating first:
         it('Users create', (done) => {
            const postData = {
@@ -51,7 +51,7 @@ describe('USERS GET ALL', () => {
 
     })
 
-    describe('Users get all negative', () => {
+    describe('Users get all - negative', () => {
 
     })
 })
