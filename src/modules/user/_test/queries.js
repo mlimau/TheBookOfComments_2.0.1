@@ -1,4 +1,4 @@
-const userCreateQuery = `mutation UserCreate($userInput: UserItems) {
+const userCreateM = `mutation UserCreate($userInput: UserItems) {
   userCreate(userInput: $userInput) {
     _id
     firstName
@@ -6,7 +6,15 @@ const userCreateQuery = `mutation UserCreate($userInput: UserItems) {
   }
 }`;
 
-const userGetAllQuery =
+const userGetByIdQ = `query UserGetById($userId: ID!) {
+  userGetById(userId: $userId) {
+    _id
+    firstName
+    lastName
+  } 
+}`;
+
+const userGetAll =
    `query UsersGetAll {
         usersGetAll {
             _id
@@ -15,4 +23,4 @@ const userGetAllQuery =
         }
     }`;
 
-module.exports = { userCreateQuery, userGetAllQuery }
+module.exports = { userCreateM, userGetByIdQ, userGetAll }
