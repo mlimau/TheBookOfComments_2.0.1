@@ -14,7 +14,7 @@ const userGetByIdQ = `query UserGetById($userId: ID!) {
   } 
 }`;
 
-const userGetAll =
+const userGetAllQ =
    `query UsersGetAll {
         usersGetAll {
             _id
@@ -23,4 +23,4 @@ const userGetAll =
         }
     }`;
 
-module.exports = { userCreateM, userGetByIdQ, userGetAll }
+module.exports = { userCreateM, userGetByIdQ, userGetAllQ }
