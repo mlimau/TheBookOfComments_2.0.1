@@ -37,8 +37,13 @@ const userUpdateById = `mutation UserUpdateById($userInput: UserFields) {
                         _id                    
                     }
                 }`
+const errorMassage = [
+    "Cannot read properties of null (reading 'firstName')",
+    "Cannot read properties of undefined (reading 'errors')"
+    ]
 
 
 
 
-module.exports = { userCreateQuery, userGetById, userDeleteByIdM, getAllUsers, userUpdateById }
+
+module.exports = { userCreateQuery, userGetById, userDeleteByIdM, getAllUsers, userUpdateById, errorMassage }
