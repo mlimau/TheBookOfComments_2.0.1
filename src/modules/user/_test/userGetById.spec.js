@@ -78,9 +78,9 @@ describe('Positives user tests', () => {
                     done()
                 })
         })
-        it('User Get by null', (done) => {
+        it('User Get by Id (empty string data)', (done) => {
             const wrongId = {
-                userId: ''
+                userId: ''//empty string
             }
             const postData = {
                 query: userGetById,
