@@ -38,14 +38,17 @@ const userUpdateById = `mutation UserUpdateById($userInput: UserFields) {
                     }
                 }`
 const errorMassage = [
-    "Cannot read properties of null (reading 'firstName')",
-    "Cannot read properties of undefined (reading 'errors')",
+    "Cannot read properties of null (reading 'firstName')",//0 - create user with null parameters data
+    "Cannot read properties of undefined (reading 'errors')",//
     "Cannot return null for non-nullable field Query.userGetById.",
-    `Cast to ObjectId failed for value "" (type string) at path "_id" for model "User"`
+    `Cast to ObjectId failed for value "" (type string) at path "_id" for model "User"`,//3 - getUserByStringId
+    `Cannot return null for non-nullable field User._id.`//4 - getUserByWrongId
     ]
 
+const nullAmount = null
 
 
 
 
-module.exports = { userCreateQuery, userGetById, userDeleteByIdM, getAllUsers, userUpdateById, errorMassage }
+
+module.exports = { userCreateQuery, userGetById, userDeleteByIdM, getAllUsers, userUpdateById, errorMassage, nullAmount }

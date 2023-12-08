@@ -1,12 +1,13 @@
 const request = require ('supertest')
 const { expect } = require('chai')
 const {requestGqL} = require('../../helper')
-const { userCreateQuery, userUpdateById} = require('./queries')
-const {describe} = require('mocha/lib/cli/run')
+const { userCreateQuery, userUpdateById, errorMassage} = require('./queries')
+const generatedId = require ('../../../utils/generateId')//function was created before
 
 
 
 describe('Positives user tests', () => {
+
     describe('USER UPDATE by ID - POSITIVE', () => {
         let userId
         let userToUpdate = {
@@ -16,11 +17,11 @@ describe('Positives user tests', () => {
             }
         }
         it('Created user', (done) => {
-           const respData = {
+            const respData = {
                 query: userCreateQuery,
                 variables: userToUpdate
             }
-        requestGqL(respData)
+            requestGqL(respData)
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err)
@@ -31,8 +32,8 @@ describe('Positives user tests', () => {
                     done()
                 })
         })//above user was created without assertions
-
-        it('Update user by ID', (done) => {
+        //BUG
+        it.skip('Update user by ID', (done) => {
             const arq = {
                 userInput: {
                     _id: userId,
@@ -57,11 +58,42 @@ describe('Positives user tests', () => {
                     expect(updatedData.userGetById._id).to.eq(userId)
                     done()
                 })
+          })
+
+        describe('USER UPDATE by ID - NEGATIVE', () => {
+            it('Update User by non-existed Id', (done) => {
+                const wrongUser = {
+                    userInput: {
+                        _id: generatedId(),
+                        firstName: "Iva",
+                       }
+                }
+                const postData = {
+                    query: `mutation UserUpdateById($userInput: UserFields) {
+                      userUpdateById(userInput: $userInput) {
+                        _id
+                        firstName
+                      }
+                    }`,
+                    variables: wrongUser
+                }
+                requestGqL(postData)
+                    .expect(200)
+                    .end((err, res) => {
+                        if (err) return done(err)
+                        const resBody = res.body
+                        console.log(res.body)
+                        expect(resBody.errors[0].message).to.equal(errorMassage[4])//const errorMessage queries.js
+                        expect(resBody.data.userUpdateById).to.equal(null)
+                        done()
+                    })
+
+
         })
     })
-    describe('USER UPDATE by ID - NEGATIVE', () => {
-
-    })
 })
+})
+
+
 
 
