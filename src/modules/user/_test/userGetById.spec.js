@@ -86,12 +86,51 @@ describe('USER GET BY ID', () => {
                     .expect(200)
                     .end((err, res) => {
                         if (err) return done(err);
-                        const respData = res.body.errors[0];
+                        const respData = res.body.data;
                         console.log('RESP BODY USER GET BY ID ===', respData);
-                        expect(respData.message).eq('Cannot return null for non-nullable field Query.userGetById.');
+                        expect(respData).eq(null);
                         done();
                     });
             });
+
+            it('user Id get by empty string', (done) => {
+                const userGet = {
+                    userId: '',
+                };
+                const postData = {
+                    query: userGetByIdQ,
+                    variables: userGet,
+                };
+                requestGql(postData)
+                    .expect(200)
+                    .end((err, res) => {
+                        if (err) return done(err);
+                        const respData = res.body.data;
+                        console.log('RESP BODY USER GET BY ID ===', respData);
+                        expect(respData).eq(null);
+                        done();
+                    });
+            });
+
+            it('user get by ID as number', (done) => {
+                const userGet = {
+                    userId: 1234567,
+                };
+                const postData = {
+                    query: userGetByIdQ,
+                    variables: userGet,
+                };
+                requestGql(postData)
+                    .expect(200)
+                    .end((err, res) => {
+                        if (err) return done(err);
+                        const respData = res.body.data;
+                        console.log('RESP BODY USER GET BY ID ===', respData);
+                        expect(respData).eq(null);
+                        done();
+                    });
+            });
+
         });
     });
 
