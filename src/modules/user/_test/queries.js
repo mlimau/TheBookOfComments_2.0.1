@@ -23,4 +23,9 @@ const userGetAllQ =
         }
     }`;
 
-module.exports = { userCreateM, userGetByIdQ, userGetAllQ }
+const userDeleteByIdM =
+    `mutation UserDeleteById($userId: ID!) {
+  userDeleteById(userId: $userId)
+}`;
+
+module.exports = { userCreateM, userGetByIdQ, userGetAllQ, userDeleteByIdM}
