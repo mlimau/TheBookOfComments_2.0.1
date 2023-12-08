@@ -39,7 +39,9 @@ const userUpdateById = `mutation UserUpdateById($userInput: UserFields) {
                 }`
 const errorMassage = [
     "Cannot read properties of null (reading 'firstName')",
-    "Cannot read properties of undefined (reading 'errors')"
+    "Cannot read properties of undefined (reading 'errors')",
+    "Cannot return null for non-nullable field Query.userGetById.",
+    `Cast to ObjectId failed for value "" (type string) at path "_id" for model "User"`
     ]
 
 

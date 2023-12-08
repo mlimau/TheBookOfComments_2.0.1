@@ -58,7 +58,7 @@ describe('USER CREATE', () => {
                 })
         })
 
-        //BUG
+        //BUG 1
         it('user creating with First Name - null', (done) => {
             const wrongArg = {
                 "userInput": {
@@ -81,7 +81,7 @@ describe('USER CREATE', () => {
                     done()
                 })
         })
-        //BUG
+        //BUG 2
         it('User creating with First Name - empty string ("")', (done) => {
             const wrongArg = {
                 "userInput": {

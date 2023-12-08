@@ -1,9 +1,9 @@
 const { expect } = require ('chai')
 const { requestGqL } = require ('../../helper')
-const { userCreateQuery, userGetById} = require ('./queries')
+const { userCreateQuery, userGetById, errorMassage} = require ('./queries')
 const { arg } = require ('./data')
 const User = require('../User')//for  User.deleteMany( {} )11 str
-//const generatedId = require ('../../../utils/generateId')//function was created before
+const generatedId = require ('../../../utils/generateId')//function was created before
 
 describe('Positives user tests', () => {
     describe('USER GET BY ID positive', () => {
@@ -58,5 +58,45 @@ describe('Positives user tests', () => {
 
     describe('USER GET BY ID NEGATIVE', () => {
 
+        it('User Get by non-existent (random) Id', (done) => {
+           const wrongId = {
+               userId: generatedId()//utils/generatedId using (случайное)
+           }
+            const postData = {
+                query: userGetById,
+                variables: wrongId
+            }
+            requestGqL(postData)
+                .expect(200)
+                .end((err, res) => {
+                    if(err) return done(err)
+
+                    const resData = res.body
+                    console.log("RESBODY ===", resData)
+                    expect(resData.errors[0].message).to.equal(errorMassage[2])
+                    expect(resData.data).to.equal(null)
+                    done()
+                })
+        })
+        it('User Get by null', (done) => {
+            const wrongId = {
+                userId: ''
+            }
+            const postData = {
+                query: userGetById,
+                variables: wrongId
+            }
+            requestGqL(postData)
+                .expect(200)
+                .end((err, res) => {
+                    if(err) return done(err)
+
+                    const resData = res.body
+                    console.log("RESBODY ===", resData)
+                    expect(resData.errors[0].message).to.equal(errorMassage[3])
+                    expect(resData.data).to.equal(null)
+                    done()
+                })
+        })
     })
 })
