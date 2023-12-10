@@ -87,11 +87,9 @@ describe('Positives user tests', () => {
                         expect(resBody.data.userUpdateById).to.equal(null)
                         done()
                     })
-
-
+                 })
         })
     })
-})
 })
 
 

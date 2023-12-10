@@ -42,7 +42,8 @@ const errorMassage = [
     "Cannot read properties of undefined (reading 'errors')",//
     "Cannot return null for non-nullable field Query.userGetById.",
     `Cast to ObjectId failed for value "" (type string) at path "_id" for model "User"`,//3 - getUserByStringId
-    `Cannot return null for non-nullable field User._id.`//4 - getUserByWrongId
+    `Cannot return null for non-nullable field User._id.`,//4 - getUserByWrongId
+    'Variable "$amount" got invalid value " "; Int cannot represent non-integer value: " "'//5 GetAllUsers - empty string input
     ]
 
 const nullAmount = null

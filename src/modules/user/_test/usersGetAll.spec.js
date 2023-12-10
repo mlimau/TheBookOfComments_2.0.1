@@ -1,6 +1,6 @@
 const { expect } = require('chai')
 const { requestGqL } = require ('../../helper')
-const { userCreateQuery, getAllUsers, nullAmount} = require ('./queries')
+const { userCreateQuery, getAllUsers, nullAmount, errorMassage} = require ('./queries')
 const { arg } = require ('./data')
 const User = require('../User')
 
@@ -57,24 +57,24 @@ describe('USERS GET ALL', () => {
 
     describe('Users get all - negative', (done) => {
 
-            it('Users get by given incorrect amount - null', (done) => {
+            it('Users get by given incorrect amount - empty string', (done) => {
                 const wrongAmount =  {
-                    amount:
+                    amount: ' '
                 }
                 const postData = {
                     query: getAllUsers,
                     variables:wrongAmount
                 }
                 requestGqL(postData)
-                    .expect(200)
+                    .expect(400)//400?????
                     .end((err, res) => {
                         if(err) return done(err)
 
-                        const resBody = res.body.data
+                        const resBody = res.body
                         console.log(resBody)
+                        expect(resBody.errors[0].message).to.equal(errorMassage[5])
                         done()
                     })
             })
-
-    })
+       })
 })
