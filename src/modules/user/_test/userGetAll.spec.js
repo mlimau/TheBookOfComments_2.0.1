@@ -1,29 +1,17 @@
-const request = require('supertest')
 const { expect } = require('chai')
-const graphQLEndpoint = 'http://localhost:5000/graphql'
+const { requestGql } = require('../../helper')
+const { userCreateM, userGetAllQ} = require('./queries')
+const { arg } = require('./data')
 
 describe('USER GET ALL',  () => {
   describe('USER GET ALL - POSITIVE',  () => {
     it('user create',  (done) => {
-      const arg = {
-        userInput: {
-          firstName: 'firstName',
-          lastName: 'lastName'
-        }
-      }
+
       const postData = {
-        query: `mutation UserCreate($userInput: UserItems) {
-  userCreate(userInput: $userInput) {
-    _id
-    firstName
-    lastName
-  }
-}`,
+        query: userCreateM,
         variables: arg
       }
-      request(graphQLEndpoint)
-          .post('/')
-          .send(postData)
+      requestGql(postData)
           .expect(200)
           .end((err, res) => {
             if(err) return done(err);
@@ -35,28 +23,20 @@ describe('USER GET ALL',  () => {
           })
     })
     it('user get all',  (done) => {
-      const arg = {
+      const userGetAll = {
         amount: 5
       }
       const postData = {
-        query: `query UsersGetAll($amount: Int) {
-  usersGetAll(amount: $amount) {
-    _id
-    firstName
-    lastName
-  }
-}`,
-        variables: arg
+        query: userGetAllQ,
+        variables: userGetAll
       }
-      request(graphQLEndpoint)
-          .post('/')
-          .send(postData)
+      requestGql(postData)
           .expect(200)
           .end((err, res) => {
             if(err) return done(err);
             const respData = res.body.data;
             console.log("RESP BODY USER GET ALL ===", respData)
-            expect(respData.usersGetAll.length).eq(arg.amount)
+            expect(respData.usersGetAll.length).eq(userGetAll.amount)
             done()
           })
     })
