@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "PORT=6000 TEST_RUNNER=true mocha ./src/modules/user/_test/userCreate.spec.js --timeout 20000 --exit",
-    "userGetById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userGetById.spec.js --timeout 20000 --exit",
-    "userDeletetById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userDeleteById.spec.js --timeout 20000 --exit",
-    "userUpdateById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userUpdateById.spec.js --timeout 20000 --exit",
-    "usersGetAll": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/usersGetAll.spec.js --timeout 20000 --exit",
+    "test": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userCreateRug.spec.js --timeout 20000 --exit",
+    "userGetById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userGetByIdRug.spec.js --timeout 20000 --exit",
+    "userDeletetById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userDeleteByIdRug.spec.js --timeout 20000 --exit",
+    "userUpdateById": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userUpdateByIdRug.spec.js --timeout 20000 --exit",
+    "usersGetAll": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/usersGetAllRug.spec.js --timeout 20000 --exit",
     "local": "cross-env NODE_ENV=local nodemon --inspect -r dotenv/config -r src/index.js",
     "start": "nodemon src/index.js"
   },
