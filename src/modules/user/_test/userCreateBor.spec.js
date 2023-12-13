@@ -15,7 +15,6 @@ describe("USER CREATE", () => {
         .end((err, res) => {
           if (err) return done(err);
           const respData = res.body.data;
-          console.log("RESP BODY ===", respData);
           expect(respData.userCreate.firstName).eq(userInput.userInput.firstName);
           expect(respData.userCreate.lastName).eq(userInput.userInput.lastName);
           done();
@@ -40,7 +39,6 @@ describe("USER CREATE", () => {
               .end((err, res) => {
                   if (err) return done(err);
                   const respData = res.body.errors;
-                  console.log("RESP BODY ===", respData);
                   expect(respData[0].extensions.code).eq("BAD_USER_INPUT");
                   done();
               });
