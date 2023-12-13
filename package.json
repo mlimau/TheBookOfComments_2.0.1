@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userGetById.specNaz.js --timeout 20000 --exit",
+    "test1": "cross-env PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userCreate.specNaz.js --timeout 20000 --exit",
+    "test2": "cross-env PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userGetById.specNaz.js --timeout 20000 --exit",
+    "test3": "cross-env PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userGetAll.specNaz.js --timeout 20000 --exit",
+    "test4": "cross-env PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userUpdateById.specNaz.js --timeout 20000 --exit",
+    "test5": "cross-env PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/userDeleteById.specNaz.js --timeout 20000 --exit",
     "local": "cross-env NODE_ENV=local nodemon --inspect -r dotenv/config -r src/index.js",
     "start": "nodemon src/index.js"
   },
