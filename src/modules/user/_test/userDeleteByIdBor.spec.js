@@ -47,7 +47,9 @@ describe('USER DELETE BY ID', () => {
                     done();
                 });
         });
+    });
 
+    describe('USER DELETE BY ID - NEGATIVE', () => {
         it('user delete by empty id', (done) => {
             const userGet = {
                 userId: "",
@@ -66,6 +68,5 @@ describe('USER DELETE BY ID', () => {
                     done();
                 });
         });
-
-    });
+    })
 });

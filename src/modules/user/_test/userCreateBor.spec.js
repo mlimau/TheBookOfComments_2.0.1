@@ -2,6 +2,7 @@ const { expect } = require("chai");
 const { requestGql } = require ('../../helper')
 const { userCreateM } = require ('./queries')
 const {  userInput } = require ('./data')
+const faker = require('faker');
 describe("USER CREATE", () => {
   describe("USER CREATE - POSITIVE", () => {
     it("user create", (done) => {
@@ -21,5 +22,28 @@ describe("USER CREATE", () => {
         });
     });
   });
-  describe("USER CREATE - NEGATIVE", () => {});
+  describe("USER CREATE - NEGATIVE", () => {
+      it('user create with invalid type of first name', (done) => {
+          const userInvInput = {
+              userInput: {
+                  firstName: 1,
+                  lastName: null,
+              },
+          };
+
+          const postData = {
+              query: userCreateM,
+              variables: userInvInput,
+          };
+          requestGql(postData)
+              .expect(400)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  const respData = res.body.errors;
+                  console.log("RESP BODY ===", respData);
+                  expect(respData[0].extensions.code).eq("BAD_USER_INPUT");
+                  done();
+              });
+      })
+  });
 });

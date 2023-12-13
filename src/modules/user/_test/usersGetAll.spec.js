@@ -26,5 +26,11 @@ describe("USERS GET ALL", () => {
                 });
         });
     });
-    describe("USERS GET ALL - NEGATIVE", () => {});
+
+
+
+    describe("USERS GET ALL - NEGATIVE", () => {
+
+
+    });
 });
