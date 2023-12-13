@@ -1,4 +1,4 @@
-const faker = require('faker')
+const faker = require('faker');
 
 const userInput = {
     userInput: {
@@ -7,4 +7,11 @@ const userInput = {
     },
 };
 
-module.exports = { userInput }
+const userInvInput = {
+    userInput: {
+        firstName: 1,
+        lastName: null,
+    },
+};
+
+module.exports = {userInput, userInvInput};
