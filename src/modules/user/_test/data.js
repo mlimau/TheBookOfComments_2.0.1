@@ -6,5 +6,10 @@ const arg = {
     lastName: faker.name.lastName()
   }
 }
-
+const arg = {
+    "userInput": {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName()
+    }
+}
 module.exports = { arg }
