@@ -17,7 +17,8 @@
     "usersGetAll": "PORT=6000 TEST_RUNNER=true mocha src/modules/user/_test/usersGetAllRug.spec.js --timeout 20000 --exit",
 
     "local": "cross-env NODE_ENV=local nodemon --inspect -r dotenv/config -r src/index.js",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'"
   },
   "keywords": [],
   "author": "",
@@ -39,10 +40,12 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.0",
     "nodemon": "^3.0.1",
+    "prettier": "^3.1.0",
     "supertest": "^6.3.3"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "faker": "^5.5.3"
   },
 
   "description": ""

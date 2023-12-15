@@ -4,13 +4,33 @@ const userCreateM = `mutation UserCreate($userInput: UserItems) {
     firstName
     lastName
   }
-}`
+}`;
+
 
 const userGetByIdQ = `query UserGetById($userId: ID!) {
   userGetById(userId: $userId) {
     _id
     firstName
     lastName
+
+  } 
+}`;
+
+const userGetAllQ =
+    `query UsersGetAll {
+        usersGetAll {
+            _id
+            firstName
+            lastName
+        }
+    }`;
+
+const userDeleteByIdM =
+    `mutation UserDeleteById($userId: ID!) {
+  userDeleteById(userId: $userId)
+}`;
+
+module.exports = {userCreateM, userGetByIdQ, userGetAllQ, userDeleteByIdM};
   }
 }`
 
@@ -85,4 +105,3 @@ const errorMassage = [
 const nullAmount = null
 
 module.exports = { userCreateQuery, userGetById, userDeleteByIdM, getAllUsers, userUpdateById, errorMassage, nullAmount }
-
