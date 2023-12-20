@@ -1,6 +1,6 @@
 const { expect } = require ('chai')
 const {requestGqL} = require('../../helper')
-const {userCreateQuery, userDeleteByIdM} = require('./queries')
+const {userCreateQuery, userDeleteByIdM, userDeleteByIdQ, errorMassage} = require('./queries')
 const {arg} = require('./data')
 const User = require('../User')
 const generatedId = require ('../../../utils/generateId')
@@ -8,7 +8,6 @@ const generatedId = require ('../../../utils/generateId')
 describe('USER DELETE BY ID', () => {
    describe('USER DELETE BY ID positive', () => {
         let userId
-
         it('User create', (done) => {
             const createdUser =  {
                 query: userCreateQuery,
@@ -27,7 +26,7 @@ describe('USER DELETE BY ID', () => {
 
    })
 
-        it('User delete', (done) => {
+        it('Delete created User by Id', (done) => {
             const delUser = {
                  userId: userId
             }
@@ -43,10 +42,32 @@ describe('USER DELETE BY ID', () => {
                 const respData = res.body.data
                 console.log(respData)
                 expect(respData.userDeleteById).to.eq(true)
+                    expect()
                 done()
                 })
 
     })
+
+       it('Get deleted User by Id', (done) => {
+           const delUser = {
+               userId: userId
+           }
+           const responseOfDelete = {
+               query: userDeleteByIdM ,
+               variables: delUser
+           }
+           requestGqL(responseOfDelete)
+               .expect(200)
+               .end((err, res) => {
+                   if(err) return done(err)
+
+                  const respData = res.body
+                   console.log(respData)
+                   expect(respData.data.userDeleteById).to.eq(false)
+                   done()
+               })
+
+       })
         })
 
     describe('USER DELETE BY ID negative', () => {
@@ -69,7 +90,35 @@ describe('USER DELETE BY ID', () => {
                     expect(resData.userDeleteById).to.equal(false)
             })
         })
+
+        it('User delete by empty string Id', (done) => {
+            const wrongArg = {
+                userId: ''
+            }
+            const postData = {
+                query: userDeleteByIdM,
+                variables: wrongArg
+            }
+            requestGqL(postData)
+                .expect(200)
+                .end((err, res) => {
+                    if(err) return done(err)
+
+                    const resData = res.body
+                    console.log("RESBODY EMPTY INPUT", resData)
+            expect(resData.errors[0].message).to.equal(errorMassage[6])
+            expect(resData.data.userDeleteById).to.equal(null)
+                    done()
+
+                })
+        })
     })
 })
+
+
+
+
+
+
 
 
